@@ -1,0 +1,34 @@
+1. 
+    git clone https://github.com/*username*/*repo*.git
+    cd *repo*
+
+2. 
+    git pull
+
+3.
+
+    *Facem modificari in fisierul/fisierele din director*
+
+4.
+
+    git status
+
+    *Va scrie cu rosu "modified *nume_fisier*"
+5.
+
+    git add *nume_fisier*
+
+    sau
+
+    git add .   <- pentru a adauga tot directorul curent
+
+6.
+
+    git commit -m "Mesaj in care spui ce mpdificari ai facut"
+
+7.
+
+    git push
+
+
+** cuvintele dintre * se inlocuiesc dupa caz
