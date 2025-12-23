@@ -17,10 +17,11 @@ if [ "$1" = "--select" ] ; then
         locatie_col_act=$(head -1 "$csv_file" | tr ',' '\n' | nl | grep -w "$word" | tr -d " " | awk -F " " '{print $1}' )
         #linia de mai sus obtine pozitia variabilei word de pe prima linie a fisierului
         locatie_col+="$locatie_col_act "
-        locatie_col=$(echo "$locatie_col" | tr ' ' ',')
+        locatie_col=$(echo "$locatie_col" | tr ' ' ',') 
     done
+    #in locatie_col sunt salvate pozitiile pt elementele care trebuie afisate
     locatie_col=${locatie_col%,} #sterge ultima virgula din string: ${var%pattern} - sterge cel mai scurt pattern de la finalul string-ului
-    afisare=$(cut -d "," -f${locatie_col} "$csv_file" | tail -n +2)
+    afisare=$(cut -d "," -f${locatie_col} "$csv_file" | tail -n +2) 
     echo "$afisare"
 fi
 if [ "$1" = "--select-all" ] ; then
