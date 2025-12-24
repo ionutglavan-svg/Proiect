@@ -8,6 +8,13 @@ while IFS="," read line
 do
     arr_cvs+=("$line") #se salveaza fiecare linie din fisier ca un element al array-ului
 done < "$csv_file"
+h=0
+while [ $h -lt ${#arr_cvs[@]} ]
+do
+    arr_cvs[$h]+=","
+    ((h++))
+done
+
 if [ "$1" = "--select" ] ; then
     shift
     locatie_col=""
@@ -21,15 +28,15 @@ if [ "$1" = "--select" ] ; then
     done
     #in locatie_col sunt salvate pozitiile pt elementele care trebuie afisate
     locatie_col=${locatie_col%,} #sterge ultima virgula din string: ${var%pattern} - sterge cel mai scurt pattern de la finalul string-ului
-    afisare=$(cut -d "," -f${locatie_col} "$csv_file" | tail -n +2) 
+    afisare=$(cut -d "," -f${locatie_col} "$csv_file" | tail -n +1) 
     echo "$afisare"
 fi
 if [ "$1" = "--select-all" ] ; then
         
 
-    IFS=", " read  -r -a cuvinte <<< "${arr_cvs[@]}"
+    IFS="," read  -r -a cuvinte <<< "${arr_cvs[@]}"
 
-    #echo "${cuvinte[@]}"  #am creeat un array format din cuvintele fisierului
+    # echo "${cuvinte[@]}"  #am creeat un array format din cuvintele fisierului
     max=0
     for cuv in "${cuvinte[@]}"
     do
@@ -44,7 +51,7 @@ if [ "$1" = "--select-all" ] ; then
     j=0
     while [ $j -lt ${#cuvinte[@]} ]
     do
-        # echo "${cuvinte[$j]}"
+         #echo "${cuvinte[$j]}"
         
         while [ $max -gt ${#cuvinte[$j]} ]
         do
@@ -71,7 +78,7 @@ if [ "$1" = "--select-all" ] ; then
     #mai sus am creeat string ul cu linii delimitatoare
     cuv_act=()
     j=0
-    while [ $j -lt ${#cuvinte[@]} ]
+    while [ $j -le ${#cuvinte[@]} ]
     do
         if [ $x -gt 0 ]
         then
