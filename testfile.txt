@@ -1,3 +1,7 @@
+<<<<<<< HEAD
 L am modificat na
 spatiu
 Ultima modificare
+=======
+un mesaj random
+>>>>>>> 035bb426dd9e28dcfe657739ba697bc5e20cfda4
