@@ -14,7 +14,7 @@ pretty_print() {
     done
     IFS="," read -r -a cuvinte <<< "${array[@]}" #cuvinte este un array cu toate field-urile din fisier ca elemente distincte
     max=0
-    echo ${cuvinte[@]}
+    # echo ${cuvinte[@]}
     for cuv in "${cuvinte[@]}"
     do
     if [ ${#cuv} -gt $max ]
