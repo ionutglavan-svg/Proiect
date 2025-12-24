@@ -21,7 +21,7 @@ if [ "$1" = "--select" ] ; then
     done
     #in locatie_col sunt salvate pozitiile pt elementele care trebuie afisate
     locatie_col=${locatie_col%,} #sterge ultima virgula din string: ${var%pattern} - sterge cel mai scurt pattern de la finalul string-ului
-    afisare=$(cut -d "," -f${locatie_col} "$csv_file" | tail -n +1) 
+    afisare=$(cut -d "," -f${locatie_col} "$csv_file" | tail -n +2) 
     echo "$afisare"
 fi
 if [ "$1" = "--select-all" ] ; then
