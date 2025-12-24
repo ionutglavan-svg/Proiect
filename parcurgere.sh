@@ -21,14 +21,74 @@ if [ "$1" = "--select" ] ; then
     done
     #in locatie_col sunt salvate pozitiile pt elementele care trebuie afisate
     locatie_col=${locatie_col%,} #sterge ultima virgula din string: ${var%pattern} - sterge cel mai scurt pattern de la finalul string-ului
-    afisare=$(cut -d "," -f${locatie_col} "$csv_file" | tail -n +2) 
+    afisare=$(cut -d "," -f${locatie_col} "$csv_file" | tail -n +1) 
     echo "$afisare"
 fi
 if [ "$1" = "--select-all" ] ; then
-    for continut in "${arr_cvs[@]}" #folosim caracterul @ pt a ne referii la tot array-ul
+        
+
+    IFS=", " read  -r -a cuvinte <<< "${arr_cvs[@]}"
+
+    #echo "${cuvinte[@]}"  #am creeat un array format din cuvintele fisierului
+    max=0
+    for cuv in "${cuvinte[@]}"
     do
-        echo "$continut"
+    if [ ${#cuv} -gt $max ]
+    then
+        max=${#cuv}
+    fi
     done
+    # echo $max 
+    #mai sus am aflat numarul maxim de litere dintre toate cuvintele
+
+    j=0
+    while [ $j -lt ${#cuvinte[@]} ]
+    do
+        # echo "${cuvinte[$j]}"
+        
+        while [ $max -gt ${#cuvinte[$j]} ]
+        do
+            cuvinte[$j]+=" "
+        done
+        cuvinte[$j]+="|"
+        ((j++))
+    done
+
+    #mai sus am adaugat spatii si pipe uri fiecarui cuvant in functie de numarul maxim de litere
+    IFS=", " read  -r -a cuv_0 <<< "${arr_cvs[0]}" #am creeat un array ce contine toate cuvintele primei linii
+    x="${#cuv_0[@]}" #am retinut numarul de cuvinte (practic numarul de coloane din csv)
+
+    nr_linii=$(($x*($max+1)))
+
+    linii=""
+        i=0
+        while [ $i -le $nr_linii ]
+        do
+        linii+="-"
+        ((i++))
+        done
+    
+    #mai sus am creeat string ul cu linii delimitatoare
+    cuv_act=()
+    j=0
+    while [ $j -lt ${#cuvinte[@]} ]
+    do
+        if [ $x -gt 0 ]
+        then
+        cuv_act+="${cuvinte[$j]}"
+        ((x--))
+        else
+        echo "$cuv_act"
+        cuv_act="${cuvinte[$j]}"
+        x=$((${#cuv_0[@]} - 1))
+        if [ $j -eq ${#cuv_0[@]} ]
+        then
+        echo $linii
+        fi
+        fi
+        ((j++))
+    done
+    #mai sus am luat pe rand fiecare cuvant si l am concatenat astfel inacat sa se obtina numarul total de coloane (repetat)
 fi
 if [ "$1" = "--validate" ] ; then
     header="${arr_cvs[0]}"
