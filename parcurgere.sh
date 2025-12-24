@@ -12,6 +12,7 @@ pretty_print() {
         array[i]+=","
         ((i++))
     done
+    #echo "${array[@]}"
     IFS=$',' read -r -a cuvinte <<< "${array[@]}" #cuvinte este un array cu toate field-urile din fisier ca elemente distincte
     max=0
     for cuv in "${cuvinte[@]}"
@@ -71,8 +72,10 @@ pretty_print() {
 
 while IFS="," read line
 do
+    echo "$line"
     arr_cvs+=("$line") #se salveaza fiecare linie din fisier ca un element al array-ului
 done < "$csv_file"
+echo ""
 if [ "$1" = "--select" ] ; then
     shift
     locatie_col=""
@@ -86,14 +89,17 @@ if [ "$1" = "--select" ] ; then
     done
     #in locatie_col sunt salvate pozitiile pt elementele care trebuie afisate
     locatie_col=${locatie_col%,} #sterge ultima virgula din string: ${var%pattern} - sterge cel mai scurt pattern de la finalul string-ului
-    afisare=$(cut -d "," -f${locatie_col} "$csv_file" | tail -n +1) 
-    for line in $afisare
+    afisare=$(cut -d "," -f${locatie_col} "$csv_file" | tail -n +1)
+    #echo "$afisare"
+    while IFS= read -r line
     do
         array_afisare+=("$line") #se salveaza fiecare linie din fisier ca un element al array-ului
-    done
+    done < <(echo "$afisare")
+    echo "${array_afisare[@]}"
     pretty_print "${array_afisare[@]}"
 fi
 if [ "$1" = "--select-all" ] ; then
+        echo "${arr_cvs[@]}"
         pretty_print "${arr_cvs[@]}"
 fi
 if [ "$1" = "--validate" ] ; then
