@@ -1,6 +1,6 @@
 id,nume,category,price,stock
 1,Mouse,Peripherals,79.9,120
 2,Keyboard,Peripherals,199.5,80
-3,Laptop,Computers,3799,12
+3,Laptop,Computers,2,12
 4,Monitor,Displays,899.9,25
 5,USB-C Cable,Peripherals,39.9,300

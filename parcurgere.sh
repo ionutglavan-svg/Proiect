@@ -112,3 +112,39 @@ if [ "$1" = "--validate" ] ; then
     done
 fi
 
+if [ "$1" = "--where" ] ; then
+    shift
+    IFS="=" read -ra cuvinte_cautare <<< "$1"
+    # echo "${cuvinte_cautare[@]}"
+    linii_cautate="${arr_cvs[0]}"
+    #echo "${linii_cautate[@]}"
+    c0="${cuvinte_cautare[0]}"
+    c1="${cuvinte_cautare[1]}"
+
+    IFS="," read  -r -a cuv_0 <<< "${arr_cvs[0]}"
+    i=0 
+    while [ $i -lt "${#cuv_0[@]}" ] ; do
+        if [ "$c0" = "${cuv_0[$i]}" ]
+            then
+                numar_col=$i
+               
+            fi
+        ((i++))
+    done
+    #  echo "$numar_col"
+    for linie in "${arr_cvs[@]}"
+    do
+        IFS="," read -ra caut_in_linie <<< "$linie"
+       
+            if [ "$c1" = "${caut_in_linie[$numar_col]}" ]
+            then
+                linii_cautate+=("$linie")
+            fi
+       
+    done
+    if [ "${#linii_cautate[@]}" -gt 1 ] ; then
+    pretty_print "${linii_cautate[@]}"
+    else
+    echo "Reintroduceti!"
+    fi
+fi
