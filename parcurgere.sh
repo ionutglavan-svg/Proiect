@@ -75,7 +75,7 @@ do
     #echo "$line"
     arr_cvs+=("$line") #se salveaza fiecare linie din fisier ca un element al array-ului
 done < "$csv_file"
-echo ""
+# echo ""
 if [ "$1" = "--select" ] ; then
     shift
     locatie_col=""
@@ -99,11 +99,11 @@ if [ "$1" = "--select" ] ; then
     do
         array_afisare+=("$line") #se salveaza fiecare linie din fisier ca un element al array-ului
     done < <(echo "$afisare")
-    echo "${array_afisare[@]}"
+    # echo "${array_afisare[@]}"
     pretty_print "${array_afisare[@]}"
 fi
 if [ "$1" = "--select-all" ] ; then
-        echo "${arr_cvs[@]}"
+        # echo "${arr_cvs[@]}"
         pretty_print "${arr_cvs[@]}"
 fi
 if [ "$1" = "--validate" ] ; then
